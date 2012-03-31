@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" \
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<dict>
+        <key>Label</key>
+        <string>com.ryantoohil.readinglisttoinstapaper</string>
+        <key>LowPriorityIO</key>
+        <true/>
+        <key>Program</key>
+        <string>/YOUR_PATH_TO_SCRIPT/Reading-List-To-Instapaper/readinglist_to_instapaper.rb</string>
+        <key>ProgramArguments</key>
+        <array>
+          <string>readinglist_to_instapaper.rb</string>
+        </array>
+        <key>WatchPaths</key>
+        <array>
+          <string>/YOUR_PATH_TO_LIBRARY/Library/Safari/Bookmarks.plist</string>
+        </array>
+</dict>
+</plist>
