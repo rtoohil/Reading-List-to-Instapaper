@@ -5,9 +5,12 @@ require 'net/https'
 require 'uri'
 require 'ruby_gntp'
 require 'nokogiri-plist'
+require 'date'
 
 # Our last run
-lastrun = Time.at(0).to_datetime.to_s
+# Setting this to epoch time in case this is our first time
+# or we don't have a last run file
+lastrun = Time.at(0).to_s
 
 # Our last run file
 # Store it on dropbox if you want to have it sync across computers
@@ -18,6 +21,8 @@ if (File.exists? File.expand_path(lastrun_file))
   lastrun = File.open(File.expand_path(lastrun_file), 'rb').read
 end
 
+# The real last run, which will either be epoch time
+# or the content of the last run file
 lastrun_dt = DateTime.parse(lastrun)
 
 # Instapaper API stuff
@@ -88,5 +93,5 @@ end
 # Only write out when we have links, so that we don't save a file every
 # time a bookmark changes
 if ( links.length > 0 ) 
-  File.open(File.expand_path(lastrun_file), 'w') {|f| f.write(Time.now.to_datetime) }
+  File.open(File.expand_path(lastrun_file), 'w') {|f| f.write(DateTime.now.to_s) }
 end

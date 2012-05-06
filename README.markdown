@@ -21,3 +21,7 @@ A couple of notes: I'm not a great Rubyist, so this code is probably cringe-incu
 That should pretty much be it. Open up Safari and add something to the Reading List. A few seconds later, you should see a little Growl popup (assuming you have Growl installed) that tells you if it succeeded to add the article.
 
 I'll clean this up as I go. Please feel free to add issues or pull requests. I have little idea what I'm doing, but I'll do my best to incorporate them.
+
+## Revisions
+* Mar 31, 2012: Initial Commit
+* May 6, 2012: Removed rails dependency and cleaned up DateTime usage. I think.
