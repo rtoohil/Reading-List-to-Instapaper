@@ -17,7 +17,7 @@ lastrun = Time.at(0).to_s
 lastrun_file = "~/.readinglist_instapaper_run"
 
 # If our timestamp file exists, read it in
-if (File.exists? File.expand_path(lastrun_file)) 
+if (File.exists? File.expand_path(lastrun_file))
   lastrun = File.open(File.expand_path(lastrun_file), 'rb').read
 end
 
@@ -48,7 +48,7 @@ if plist.include? 'Children'
         child[ck].each do |list|
           if list.include? 'ReadingList'
             datefetched = list['ReadingList']['DateLastFetched']
-            if (datefetched > lastrun_dt) 
+            if (datefetched > lastrun_dt)
               links << URI::escape(list['URLString'])
             end
           end
@@ -70,28 +70,34 @@ links.each do |url|
   request.basic_auth(insta_user, insta_pass)
   response = http.request(request)
 
-  # Throw up a growl message 
+  # Throw up a growl message
   # The icon stuff doesn't work. Not sure why yet
   if ( response.code == '201' )
+    begin
     GNTP.notify({
       :app_name => "Instapaper",
-      :title    => "Added to Instapaper", 
+      :title    => "Added to Instapaper",
       :text     => "Successfully added #{url}",
       :icon     => "http://www.instapaper.com/apple-touch-icon.png",
     })
+    rescue Errno::ECONNREFUSED
+    end
   else
+    begin
     GNTP.notify({
       :app_name => "Instapaper",
-      :title    => "Error Adding to Instapaper", 
+      :title    => "Error Adding to Instapaper",
       :text     => "Could not add #{url}",
       :icon     => "http://www.instapaper.com/apple-touch-icon.png",
     })
-  end 
+    rescue Errno::ECONNREFUSED
+    end
+  end
 end
 
 # Let's write our successful run out
 # Only write out when we have links, so that we don't save a file every
 # time a bookmark changes
-if ( links.length > 0 ) 
+if ( links.length > 0 )
   File.open(File.expand_path(lastrun_file), 'w') {|f| f.write(DateTime.now.to_s) }
 end
