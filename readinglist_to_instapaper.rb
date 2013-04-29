@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
+require 'bundler/setup'
+
 require 'net/https'
 require 'uri'
 require 'ruby_gntp'
@@ -27,27 +28,25 @@ lastrun_dt = DateTime.parse(lastrun)
 
 # Instapaper API stuff
 instapaper = 'www.instapaper.com'
-insta_user = 'YOUR_INSTAPAPER_USER'
-insta_pass = 'YOUR_INSTAPAPER_PASS'
+insta_user = 'your instapaper user'
+insta_pass = 'your instapaper pass'
 
 # My Array of Links to send to Instapaper
 links = Array.new
 
 # Open the binary Bookmarks plist and convert to xml, read it in
 input = %x[/usr/bin/plutil -convert xml1 -o - ~/Library/Safari/Bookmarks.plist]
-
 # Let's parse the plist and find the elements we care about
 # There's probably a better way to do this, but I'm stupid at Ruby
 # This also seems ripe for refactoring, but I'm lazy
 plist = Nokogiri::PList(input)
-
 if plist.include? 'Children'
   plist['Children'].each do |child|
     child.keys.each do |ck|
       if child[ck].is_a? Array
         child[ck].each do |list|
           if list.include? 'ReadingList'
-            datefetched = list['ReadingList']['DateLastFetched']
+            datefetched = list['ReadingList']['DateAdded']
             if (datefetched > lastrun_dt)
               links << URI::escape(list['URLString'])
             end
