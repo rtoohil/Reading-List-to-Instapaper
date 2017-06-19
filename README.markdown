@@ -25,3 +25,4 @@ I'll clean this up as I go. Please feel free to add issues or pull requests. I h
 ## Revisions
 * Mar 31, 2012: Initial Commit
 * May 6, 2012: Removed rails dependency and cleaned up DateTime usage. I think.
+* Jun 19, 2017: Added plist opening stanza [(thanks to Catherine McLoughlin)](https://github.com/catmclough)
